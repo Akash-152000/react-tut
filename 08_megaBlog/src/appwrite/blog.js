@@ -20,15 +20,33 @@ export class Service {
         config.appwriteCollectionId,
         slug,
         {
-            title,
-            content,
-            featuredImage,
-            status,
-            userId
+          title,
+          content,
+          featuredImage,
+          status,
+          userId,
         }
       );
     } catch (error) {
       console.log("Appwrite service :: createPost :: Error", error);
+    }
+  }
+
+  async updatePost(slug, { title, content, featuredImage, status }) {
+    try {
+      return await this.databases.updateDocument(
+        config.appwriteDatabaseId,
+        config.appwriteCollectionId,
+        slug,
+        {
+          title,
+          content,
+          featuredImage,
+          status,
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: updatePost :: Error", error);
     }
   }
 }
