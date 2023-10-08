@@ -64,21 +64,45 @@ export class Service {
     }
   }
 
-  async getPost(slug){
+  async getPost(slug) {
     try {
-
-        return await this.databases.getDocument(
-            config.appwriteDatabaseId,
-            config.appwriteCollectionId,
-            slug
-        )
-        
+      return await this.databases.getDocument(
+        config.appwriteDatabaseId,
+        config.appwriteCollectionId,
+        slug
+      );
     } catch (error) {
-        console.log("Appwrite service :: getPost :: Error", error);
-        return false;
+      console.log("Appwrite service :: getPost :: Error", error);
+      return false;
     }
   }
 
+  async getPosts(queries = [Query.equal("status", "active")]) {
+    try {
+      return await this.databases.listDocuments(
+        config.appwriteDatabaseId,
+        config.appwriteCollectionId,
+        queries
+      );
+    } catch (error) {
+      console.log("Appwrite service :: getPost :: Error", error);
+    }
+  }
+
+  // file upload service
+
+  async uploadFile(file){
+    try {
+      return await this.storage.createFile(
+        config.appwriteBucketId,
+        ID.unique(),
+        file
+      )
+      
+    } catch (error) {
+      console.log("Appwrite service :: uploadFile :: Error", error);
+    }
+  }
 
 }
 
